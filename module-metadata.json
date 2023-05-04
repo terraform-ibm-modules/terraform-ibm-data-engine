@@ -20,7 +20,7 @@
       "description": "(Optional) Guid of existing key protect to be used",
       "pos": {
         "filename": "variables.tf",
-        "line": 48
+        "line": 47
       }
     },
     "key_protect_region": {
@@ -30,7 +30,7 @@
       "default": "us-south",
       "pos": {
         "filename": "variables.tf",
-        "line": 42
+        "line": 41
       }
     },
     "key_protect_root_key": {
@@ -39,7 +39,7 @@
       "description": "(Optional) Id of existing key to be used",
       "pos": {
         "filename": "variables.tf",
-        "line": 54
+        "line": 53
       }
     },
     "plan": {

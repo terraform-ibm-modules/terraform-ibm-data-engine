@@ -38,7 +38,6 @@ variable "plan" {
   }
 }
 
-
 variable "key_protect_region" {
   description = "(Optional) The region where key protect is deployed"
   type        = string
