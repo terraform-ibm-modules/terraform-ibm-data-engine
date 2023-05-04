@@ -1,12 +1,164 @@
 {
   "path": ".",
-  "variables": {},
-  "outputs": {},
+  "variables": {
+    "instance_name": {
+      "name": "instance_name",
+      "type": "string",
+      "description": "Name to of the new data engine instance",
+      "required": true,
+      "source": [
+        "ibm_resource_instance.data_engine_instance.name"
+      ],
+      "pos": {
+        "filename": "variables.tf",
+        "line": 12
+      }
+    },
+    "key_protect_guid": {
+      "name": "key_protect_guid",
+      "type": "string",
+      "description": "(Optional) Guid of existing key protect to be used",
+      "pos": {
+        "filename": "variables.tf",
+        "line": 48
+      }
+    },
+    "key_protect_region": {
+      "name": "key_protect_region",
+      "type": "string",
+      "description": "(Optional) The region where key protect is deployed",
+      "default": "us-south",
+      "pos": {
+        "filename": "variables.tf",
+        "line": 42
+      }
+    },
+    "key_protect_root_key": {
+      "name": "key_protect_root_key",
+      "type": "string",
+      "description": "(Optional) Id of existing key to be used",
+      "pos": {
+        "filename": "variables.tf",
+        "line": 54
+      }
+    },
+    "plan": {
+      "name": "plan",
+      "type": "string",
+      "description": "The plan for the Data engine instance. Standard or lite.",
+      "default": "lite",
+      "required": true,
+      "source": [
+        "ibm_resource_instance.data_engine_instance.plan"
+      ],
+      "pos": {
+        "filename": "variables.tf",
+        "line": 30
+      }
+    },
+    "region": {
+      "name": "region",
+      "type": "string",
+      "description": "Name of the Region to deploy in data engine instance",
+      "default": "us-south",
+      "required": true,
+      "source": [
+        "ibm_resource_instance.data_engine_instance.location"
+      ],
+      "pos": {
+        "filename": "variables.tf",
+        "line": 24
+      },
+      "cloud_data_type": "region",
+      "immutable": true
+    },
+    "resource_group_id": {
+      "name": "resource_group_id",
+      "type": "string",
+      "description": "ID of resource group to use when creating the data engine",
+      "required": true,
+      "source": [
+        "ibm_resource_instance.data_engine_instance.resource_group_id"
+      ],
+      "pos": {
+        "filename": "variables.tf",
+        "line": 6
+      },
+      "cloud_data_type": "resource_group",
+      "immutable": true,
+      "computed": true,
+      "cloud_data_range": [
+        "resolved_to:id"
+      ]
+    },
+    "tags": {
+      "name": "tags",
+      "type": "list(any)",
+      "description": "(Optional, Array of Strings) A list of tags that you want to add to your instance.",
+      "default": [],
+      "source": [
+        "ibm_resource_instance.data_engine_instance.tags"
+      ],
+      "pos": {
+        "filename": "variables.tf",
+        "line": 17
+      }
+    }
+  },
+  "outputs": {
+    "guid": {
+      "name": "guid",
+      "description": "data engine guid",
+      "value": "ibm_resource_instance.data_engine_instance.guid",
+      "pos": {
+        "filename": "outputs.tf",
+        "line": 1
+      },
+      "type": "TypeString"
+    },
+    "name": {
+      "name": "name",
+      "description": "data engine name",
+      "value": "ibm_resource_instance.data_engine_instance.name",
+      "pos": {
+        "filename": "outputs.tf",
+        "line": 6
+      },
+      "type": "TypeString"
+    }
+  },
   "required_core": [
     "\u003e= 1.0.0"
   ],
-  "required_providers": {},
-  "managed_resources": {},
+  "required_providers": {
+    "ibm": {
+      "source": "IBM-Cloud/ibm",
+      "version_constraints": [
+        "\u003e= 1.49.0"
+      ]
+    }
+  },
+  "managed_resources": {
+    "ibm_resource_instance.data_engine_instance": {
+      "mode": "managed",
+      "type": "ibm_resource_instance",
+      "name": "data_engine_instance",
+      "attributes": {
+        "location": "region",
+        "name": "instance_name",
+        "plan": "plan",
+        "resource_group_id": "resource_group_id",
+        "tags": "tags"
+      },
+      "provider": {
+        "name": "ibm"
+      },
+      "pos": {
+        "filename": "main.tf",
+        "line": 9
+      }
+    }
+  },
   "data_resources": {},
   "module_calls": {}
 }
