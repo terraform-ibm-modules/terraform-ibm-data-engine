@@ -12,12 +12,15 @@ import (
 const resourceGroup = "geretain-test-resources"
 const defaultExampleTerraformDir = "examples/default"
 
+const regionSelectionPath = "../common-dev-assets/common-go-assets/icd-region-prefs.yaml"
+
 func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptions {
 	options := testhelper.TestOptionsDefaultWithVars(&testhelper.TestOptions{
-		Testing:       t,
-		TerraformDir:  dir,
-		Prefix:        prefix,
-		ResourceGroup: resourceGroup,
+		Testing:            t,
+		TerraformDir:       dir,
+		Prefix:             prefix,
+		ResourceGroup:      resourceGroup,
+		BestRegionYAMLPath: regionSelectionPath,
 	})
 	return options
 }
