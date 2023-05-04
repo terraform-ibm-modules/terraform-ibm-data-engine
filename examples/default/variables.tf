@@ -6,14 +6,14 @@ variable "ibmcloud_api_key" {
 
 variable "region" {
   type        = string
-  description = "Region to provision all resources created by this example"
+  description = "The region data engine is to be created on."
   default     = "us-south"
 }
 
 variable "prefix" {
   type        = string
   description = "Prefix to append to all resources created by this example"
-  default     = "terraform"
+  default     = "data_engine"
 }
 
 variable "resource_group" {
@@ -26,4 +26,15 @@ variable "resource_tags" {
   type        = list(string)
   description = "Optional list of tags to be added to created resources"
   default     = []
+}
+
+variable "plan" {
+  type        = string
+  description = "The plan for the Data engine instance. Standard or lite."
+  default     = "lite"
+
+  validation {
+    condition     = contains(["standard", "lite"], var.plan)
+    error_message = "Supported plans: standard or lite."
+  }
 }
