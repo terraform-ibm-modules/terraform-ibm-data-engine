@@ -27,15 +27,11 @@ unless real values don't help users know what to change.
 # Replace "main" with a GIT release version to lock into a specific release
 module "data_engine" {
   source               = "git::https://github.com/terraform-ibm-modules/terraform-ibm-data-engine.git?ref=main"
-  resource_group_id    = module.resource_group.resource_group_id
-  environment_name     = var.prefix
-  key_protect_region   = var.key_protect_region
-  region               = var.region
-  plan                 = var.plan
-  resource_tags        = var.resource_tags
-  name                 = var.name
-  key_protect_guid     = var.key_protect_guid
-  key_protect_root_key = var.key_protect_root_key
+  resource_group_id    = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX"
+  environment_name     = "data_engine"
+  key_protect_region   = "us-south"
+  region               = "us-south"
+  plan                 = "lite"
 }
 ```
 
@@ -119,19 +115,22 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [ibm_iam_authorization_policy.kms_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy) | resource |
 | [ibm_resource_instance.data_engine_instance](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_instance) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_existing_kms_instance_guid"></a> [existing\_kms\_instance\_guid](#input\_existing\_kms\_instance\_guid) | The GUID of the Hyper Protect or Key Protect instance in which the key specified in var.kms\_key\_crn is coming from. Only required if skip\_iam\_authorization\_policy is false | `string` | `null` | no |
 | <a name="input_instance_name"></a> [instance\_name](#input\_instance\_name) | Name to of the new data engine instance | `string` | n/a | yes |
-| <a name="input_key_protect_guid"></a> [key\_protect\_guid](#input\_key\_protect\_guid) | (Optional) Guid of existing key protect to be used | `string` | `null` | no |
 | <a name="input_key_protect_region"></a> [key\_protect\_region](#input\_key\_protect\_region) | (Optional) The region where key protect is deployed | `string` | `"us-south"` | no |
-| <a name="input_key_protect_root_key"></a> [key\_protect\_root\_key](#input\_key\_protect\_root\_key) | (Optional) Id of existing key to be used | `string` | `null` | no |
+| <a name="input_kms_key_crn"></a> [kms\_key\_crn](#input\_kms\_key\_crn) | (Optional) The root key CRN of a Key Management Service like Key Protect or Hyper Protect Crypto Service (HPCS) that you want to use for disk encryption. If null, database is encrypted by using randomly generated keys. See https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-key-protect&interface=ui#key-byok for current list of supported regions for BYOK | `string` | `null` | no |
 | <a name="input_plan"></a> [plan](#input\_plan) | The plan for the Data engine instance. Standard or lite. | `string` | `"lite"` | no |
 | <a name="input_region"></a> [region](#input\_region) | Name of the Region to deploy in data engine instance | `string` | `"us-south"` | no |
 | <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | ID of resource group to use when creating the data engine | `string` | n/a | yes |
+| <a name="input_service_endpoints"></a> [service\_endpoints](#input\_service\_endpoints) | The type of the service endpoint that will be ...... | `string` | `"public"` | no |
+| <a name="input_skip_iam_authorization_policy"></a> [skip\_iam\_authorization\_policy](#input\_skip\_iam\_authorization\_policy) | Set to true to skip the creation of an IAM authorization policy | `bool` | `true` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | (Optional, Array of Strings) A list of tags that you want to add to your instance. | `list(any)` | `[]` | no |
 
 ## Outputs

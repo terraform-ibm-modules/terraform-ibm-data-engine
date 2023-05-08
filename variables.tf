@@ -38,6 +38,21 @@ variable "plan" {
   }
 }
 
+variable "service_endpoints" {
+  description = "The type of the service endpoint that will be ......"
+  type        = string
+  default     = "public"
+  validation {
+    condition     = contains(["public", "private"], var.service_endpoints)
+    error_message = "The endpoint value must be one of the following: public or private"
+  }
+}
+
+variable "skip_iam_authorization_policy" {
+  type        = bool
+  description = "Set to true to skip the creation of an IAM authorization policy"
+  default     = true
+}
 
 variable "key_protect_region" {
   description = "(Optional) The region where key protect is deployed"
@@ -45,14 +60,14 @@ variable "key_protect_region" {
   default     = "us-south"
 }
 
-variable "key_protect_guid" {
+variable "existing_kms_instance_guid" {
   type        = string
-  description = "(Optional) Guid of existing key protect to be used"
+  description = "The GUID of the Hyper Protect or Key Protect instance in which the key specified in var.kms_key_crn is coming from. Only required if skip_iam_authorization_policy is false"
   default     = null
 }
 
-variable "key_protect_root_key" {
+variable "kms_key_crn" {
   type        = string
-  description = "(Optional) Id of existing key to be used"
+  description = "(Optional) The root key CRN of a Key Management Service like Key Protect or Hyper Protect Crypto Service (HPCS) that you want to use for disk encryption. If null, database is encrypted by using randomly generated keys. See https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-key-protect&interface=ui#key-byok for current list of supported regions for BYOK"
   default     = null
 }
