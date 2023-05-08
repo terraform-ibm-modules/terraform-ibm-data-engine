@@ -39,7 +39,7 @@ variable "plan" {
 }
 
 variable "service_endpoints" {
-  description = "The type of the service endpoint that will be ......"
+  description = "The type of the service endpoint."
   type        = string
   default     = "public"
   validation {
