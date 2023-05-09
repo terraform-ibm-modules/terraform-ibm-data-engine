@@ -39,7 +39,7 @@ variable "plan" {
 }
 
 variable "service_endpoints" {
-  description = "The type of the service endpoint."
+  description = "The type of the service endpoint for the data engine."
   type        = string
   default     = "public"
   validation {
@@ -68,6 +68,6 @@ variable "existing_kms_instance_guid" {
 
 variable "kms_key_crn" {
   type        = string
-  description = "(Optional) The root key CRN of a Key Management Service like Key Protect or Hyper Protect Crypto Service (HPCS) that you want to use for disk encryption. If null, database is encrypted by using randomly generated keys. See https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-key-protect&interface=ui#key-byok for current list of supported regions for BYOK"
+  description = "(Optional) The root key CRN of a Key Management Service like Key Protect or Hyper Protect Crypto Service (HPCS) that you want to use for disk encryption. If null, database is encrypted by using randomly generated keys. See https://cloud.ibm.com/docs/sql-query?topic=sql-query-keyprotect"
   default     = null
 }
