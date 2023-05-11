@@ -10,28 +10,9 @@ import (
 
 // Use existing resource group
 const resourceGroup = "geretain-test-data-engine"
-const defaultExampleTerraformDir = "examples/default"
 const completeExampleTerraformDir = "examples/complete"
 
 const regionSelectionPath = "../common-dev-assets/common-go-assets/icd-region-prefs.yaml"
-
-func TestRunDefaultExample(t *testing.T) {
-	t.Parallel()
-
-	options := testhelper.TestOptionsDefaultWithVars(&testhelper.TestOptions{
-		Testing:            t,
-		TerraformDir:       defaultExampleTerraformDir,
-		Prefix:             "data-engine-default",
-		ResourceGroup:      resourceGroup,
-		BestRegionYAMLPath: regionSelectionPath,
-		TerraformVars: map[string]interface{}{
-			"plan": "standard",
-		},
-	})
-	output, err := options.RunTestConsistency()
-	assert.Nil(t, err, "This should not have errored")
-	assert.NotNil(t, output, "Expected some output")
-}
 
 func TestRunCompleteExample(t *testing.T) {
 	t.Parallel()

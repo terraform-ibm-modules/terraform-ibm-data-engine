@@ -41,20 +41,20 @@ variable "plan" {
 variable "service_endpoints" {
   description = "The type of the service endpoint for the data engine."
   type        = string
-  default     = "public"
+  default     = "private"
   validation {
-    condition     = contains(["public", "private"], var.service_endpoints)
-    error_message = "The endpoint value must be one of the following: public or private"
+    condition     = contains(["public", "private", "public-and-private"], var.service_endpoints)
+    error_message = "The endpoint value must be one of the following: public , private and public-and-private"
   }
 }
 
 variable "skip_iam_authorization_policy" {
   type        = bool
-  description = "Set to true to skip the creation of an IAM authorization policy"
+  description = "Set to true to skip the creation of an IAM authorization policy that permits all Data Engine instances in the given resource group to read the encryption key from the KMS instance provided in 'existing_kms_instance_guid'"
   default     = true
 }
 
-variable "key_protect_region" {
+variable "kms_region" {
   description = "(Optional) The region where key protect is deployed"
   type        = string
   default     = "us-south"
@@ -62,12 +62,12 @@ variable "key_protect_region" {
 
 variable "existing_kms_instance_guid" {
   type        = string
-  description = "The GUID of the Hyper Protect or Key Protect instance in which the key specified in var.kms_key_crn is coming from. Only required if skip_iam_authorization_policy is false"
+  description = "The GUID of the Key Protect instance in which the key specified in var.kms_key_crn is coming from."
   default     = null
 }
 
 variable "kms_key_crn" {
   type        = string
-  description = "(Optional) The root key CRN of a Key Management Service like Key Protect or Hyper Protect Crypto Service (HPCS) that you want to use for disk encryption. If null, database is encrypted by using randomly generated keys. See https://cloud.ibm.com/docs/sql-query?topic=sql-query-keyprotect"
+  description = "The root key CRN of a Key Management Service like Key Protect that you want to use for disk encryption. If null, database is encrypted by using randomly generated keys. See https://cloud.ibm.com/docs/sql-query?topic=sql-query-keyprotect"
   default     = null
 }

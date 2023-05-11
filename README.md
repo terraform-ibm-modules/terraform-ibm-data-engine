@@ -13,7 +13,7 @@
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![latest release](https://img.shields.io/github/v/release/terraform-ibm-modules/terraform-ibm-data-engine?logo=GitHub&sort=semver)](https://github.com/terraform-ibm-modules/terraform-ibm-data-engine/releases/latest)
 
-This module provisions data engine instance with key protect
+This module provisions data engine instance.
 
 ## Usage
 
@@ -29,7 +29,6 @@ unless real values don't help users know what to change.
 module "data_engine" {
   source               = "git::https://github.com/terraform-ibm-modules/terraform-ibm-data-engine.git?ref=main"
   resource_group_id    = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX"
-  environment_name     = "data_engine"
   key_protect_region   = "us-south"
   region               = "us-south"
   plan                 = "lite"
@@ -97,8 +96,8 @@ statement instead the previous block.
 <!-- BEGIN EXAMPLES HOOK -->
 ## Examples
 
-- [ Complete Example With Standard Plan](examples/complete)
-- [ Default Example With Lite Plan](examples/default)
+- [ Basic Example](examples/basic)
+- [ Complete Example With BYOK Encryption](examples/complete)
 <!-- END EXAMPLES HOOK -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -123,23 +122,24 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_existing_kms_instance_guid"></a> [existing\_kms\_instance\_guid](#input\_existing\_kms\_instance\_guid) | The GUID of the Hyper Protect or Key Protect instance in which the key specified in var.kms\_key\_crn is coming from. Only required if skip\_iam\_authorization\_policy is false | `string` | `null` | no |
+| <a name="input_existing_kms_instance_guid"></a> [existing\_kms\_instance\_guid](#input\_existing\_kms\_instance\_guid) | The GUID of the Key Protect instance in which the key specified in var.kms\_key\_crn is coming from. | `string` | `null` | no |
 | <a name="input_instance_name"></a> [instance\_name](#input\_instance\_name) | Name to of the new data engine instance | `string` | n/a | yes |
-| <a name="input_key_protect_region"></a> [key\_protect\_region](#input\_key\_protect\_region) | (Optional) The region where key protect is deployed | `string` | `"us-south"` | no |
-| <a name="input_kms_key_crn"></a> [kms\_key\_crn](#input\_kms\_key\_crn) | (Optional) The root key CRN of a Key Management Service like Key Protect or Hyper Protect Crypto Service (HPCS) that you want to use for disk encryption. If null, database is encrypted by using randomly generated keys. See https://cloud.ibm.com/docs/sql-query?topic=sql-query-keyprotect | `string` | `null` | no |
+| <a name="input_kms_key_crn"></a> [kms\_key\_crn](#input\_kms\_key\_crn) | The root key CRN of a Key Management Service like Key Protect that you want to use for disk encryption. If null, database is encrypted by using randomly generated keys. See https://cloud.ibm.com/docs/sql-query?topic=sql-query-keyprotect | `string` | `null` | no |
+| <a name="input_kms_region"></a> [kms\_region](#input\_kms\_region) | (Optional) The region where key protect is deployed | `string` | `"us-south"` | no |
 | <a name="input_plan"></a> [plan](#input\_plan) | The plan for the Data engine instance. Standard or lite. | `string` | `"lite"` | no |
 | <a name="input_region"></a> [region](#input\_region) | Name of the Region to deploy in data engine instance | `string` | `"us-south"` | no |
 | <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | ID of resource group to use when creating the data engine | `string` | n/a | yes |
-| <a name="input_service_endpoints"></a> [service\_endpoints](#input\_service\_endpoints) | The type of the service endpoint for the data engine. | `string` | `"public"` | no |
-| <a name="input_skip_iam_authorization_policy"></a> [skip\_iam\_authorization\_policy](#input\_skip\_iam\_authorization\_policy) | Set to true to skip the creation of an IAM authorization policy | `bool` | `true` | no |
+| <a name="input_service_endpoints"></a> [service\_endpoints](#input\_service\_endpoints) | The type of the service endpoint for the data engine. | `string` | `"private"` | no |
+| <a name="input_skip_iam_authorization_policy"></a> [skip\_iam\_authorization\_policy](#input\_skip\_iam\_authorization\_policy) | Set to true to skip the creation of an IAM authorization policy that permits all Data Engine instances in the given resource group to read the encryption key from the KMS instance provided in 'existing\_kms\_instance\_guid' | `bool` | `true` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | (Optional, Array of Strings) A list of tags that you want to add to your instance. | `list(any)` | `[]` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
+| <a name="output_crn"></a> [crn](#output\_crn) | data engine crn |
 | <a name="output_guid"></a> [guid](#output\_guid) | data engine guid |
-| <a name="output_name"></a> [name](#output\_name) | data engine name |
+| <a name="output_id"></a> [id](#output\_id) | data engine id |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 <!-- BEGIN CONTRIBUTING HOOK -->
 
@@ -147,9 +147,9 @@ No modules.
 
 ## Contributing
 
-You can report issues and request features for this module in the GoldenEye [issues](https://github.ibm.com/GoldenEye/issues) repo.See [Report a Bug or Create Enhancement Request](https://github.ibm.com/GoldenEye/documentation/blob/master/issues.md).
+You can report issues and request features for this module in GitHub issues in the module repo. See [Report an issue or request a feature](https://github.com/terraform-ibm-modules/.github/blob/main/.github/SUPPORT.md).
 
-To set up your local development environment, see [Local development setup](https://github.ibm.com/GoldenEye/documentation/blob/master/local-dev-setup.md) in the project documentation.
+To set up your local development environment, see [Local development setup](https://terraform-ibm-modules.github.io/documentation/#/local-dev-setup) in the project documentation.
 
 <!-- Source for this readme file: https://github.com/terraform-ibm-modules/common-dev-assets/tree/main/module-assets/ci/module-template-automation -->
 <!-- END CONTRIBUTING HOOK -->

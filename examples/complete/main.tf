@@ -15,7 +15,7 @@ module "resource_group" {
 ##############################################################################
 
 module "key_protect_all_inclusive" {
-  source                    = "git::https://github.com/terraform-ibm-modules/terraform-ibm-key-protect-all-inclusive.git?ref=v3.1.2"
+  source                    = "git::https://github.com/terraform-ibm-modules/terraform-ibm-key-protect-all-inclusive.git?ref=v4.1.0"
   resource_group_id         = module.resource_group.resource_group_id
   region                    = "us-south"
   key_protect_instance_name = "${var.prefix}-kp"
@@ -37,20 +37,11 @@ locals {
 module "data_engine" {
   source                     = "../../"
   resource_group_id          = module.resource_group.resource_group_id
-  key_protect_region         = "us-south"
+  kms_region                 = "us-south"
   region                     = var.region
   plan                       = "standard"
   tags                       = var.resource_tags
   instance_name              = "${var.prefix}-data_engine"
   existing_kms_instance_guid = local.existing_kms_instance_guid
   kms_key_crn                = local.kms_key_crn
-}
-
-# Create IAM Access Policy to allow Key protect to access data engine instance
-resource "ibm_iam_authorization_policy" "policy" {
-  source_service_name         = "sql-query"
-  source_resource_group_id    = module.resource_group.resource_group_id
-  target_service_name         = "kms"
-  target_resource_instance_id = local.existing_kms_instance_guid
-  roles                       = ["Reader"]
 }

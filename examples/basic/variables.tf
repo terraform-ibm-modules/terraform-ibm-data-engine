@@ -27,14 +27,3 @@ variable "resource_tags" {
   description = "Optional list of tags to be added to created resources"
   default     = []
 }
-
-variable "plan" {
-  type        = string
-  description = "The plan for the Data engine instance. Standard or lite."
-  default     = "lite"
-
-  validation {
-    condition     = contains(["standard", "lite"], var.plan)
-    error_message = "Supported plans: standard or lite."
-  }
-}

@@ -1,4 +1,4 @@
-# Default Example With Lite Plan
+# Basic Example
 
 An end-to-end example to create data engine with lite plan.
 This example uses the IBM Cloud terraform provider to:

@@ -3,7 +3,12 @@ output "guid" {
   value       = ibm_resource_instance.data_engine_instance.guid
 }
 
-output "name" {
-  description = "data engine name"
-  value       = ibm_resource_instance.data_engine_instance.name
+output "id" {
+  description = "data engine id"
+  value       = ibm_resource_instance.data_engine_instance.id
+}
+
+output "crn" {
+  description = "data engine crn"
+  value       = ibm_resource_instance.data_engine_instance.crn
 }
