@@ -6,12 +6,12 @@ locals {
   enable_user_managed_encryption = var.plan == "standard" && var.existing_kms_instance_guid != null && var.kms_key_crn != null && var.kms_region != null
 
   # tflint-ignore: terraform_unused_declarations
-  validate_skip_iam_authorization_policy = var.skip_iam_authorization_policy == false && (var.kms_key_crn == null || var.existing_kms_instance_guid == null) ? tobool("When var.skip_iam_authorization_policy is set to false, a value must be passed for var.existing_kms_instance_guid and var.kms_key_crn. Alternatively, if opting to use default encryption, set var.skip_iam_authorization_policy to true to skip creating any KMS auth policy creation.") : true
+  validate_auth_policy = var.kms_encryption_enabled && var.skip_iam_authorization_policy == false && var.existing_kms_instance_guid == null ? tobool("When var.skip_iam_authorization_policy is set to false, and var.kms_encryption_enabled to true, a value must be passed for var.existing_kms_instance_guid in order to create the auth policy.") : true
 
 }
 
 resource "ibm_iam_authorization_policy" "kms_policy" {
-  count                       = var.skip_iam_authorization_policy ? 0 : 1
+  count                       = var.kms_encryption_enabled == false || var.skip_iam_authorization_policy ? 0 : 1
   source_service_name         = "sql-query"
   source_resource_group_id    = var.resource_group_id
   target_service_name         = "kms"

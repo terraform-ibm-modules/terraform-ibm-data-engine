@@ -10,7 +10,7 @@
       ],
       "pos": {
         "filename": "variables.tf",
-        "line": 63
+        "line": 69
       },
       "immutable": true,
       "computed": true
@@ -28,13 +28,26 @@
         "line": 12
       }
     },
+    "kms_encryption_enabled": {
+      "name": "kms_encryption_enabled",
+      "type": "bool",
+      "description": "Set this to true to control the encryption keys used to encrypt the data that you store in IBM Cloud® Databases. If set to false, the data is encrypted by using randomly generated keys. For more info on Key Protect integration, see https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-key-protect. For more info on HPCS integration, see https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-hpcs",
+      "default": false,
+      "source": [
+        "ibm_iam_authorization_policy.kms_policy.count"
+      ],
+      "pos": {
+        "filename": "variables.tf",
+        "line": 51
+      }
+    },
     "kms_key_crn": {
       "name": "kms_key_crn",
       "type": "string",
       "description": "The root key CRN of a Key Management Service like Key Protect that you want to use for disk encryption. If null, database is encrypted by using randomly generated keys. See https://cloud.ibm.com/docs/sql-query?topic=sql-query-keyprotect",
       "pos": {
         "filename": "variables.tf",
-        "line": 69
+        "line": 75
       }
     },
     "kms_region": {
@@ -44,7 +57,7 @@
       "default": "us-south",
       "pos": {
         "filename": "variables.tf",
-        "line": 57
+        "line": 63
       }
     },
     "plan": {
@@ -112,12 +125,9 @@
       "type": "bool",
       "description": "Set to true to skip the creation of an IAM authorization policy that permits all Data Engine instances in the given resource group to read the encryption key from the KMS instance provided in 'existing_kms_instance_guid'",
       "default": true,
-      "source": [
-        "ibm_iam_authorization_policy.kms_policy.count"
-      ],
       "pos": {
         "filename": "variables.tf",
-        "line": 51
+        "line": 57
       }
     },
     "tags": {
@@ -183,7 +193,7 @@
       "type": "ibm_iam_authorization_policy",
       "name": "kms_policy",
       "attributes": {
-        "count": "skip_iam_authorization_policy",
+        "count": "kms_encryption_enabled",
         "source_resource_group_id": "resource_group_id",
         "target_resource_instance_id": "existing_kms_instance_guid"
       },
