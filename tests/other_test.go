@@ -17,9 +17,6 @@ func TestRunBasicExample(t *testing.T) {
 		Prefix:             "data-engine-default",
 		ResourceGroup:      resourceGroup,
 		BestRegionYAMLPath: regionSelectionPath,
-		TerraformVars: map[string]interface{}{
-			"plan": "standard",
-		},
 	})
 	output, err := options.RunTestConsistency()
 	assert.Nil(t, err, "This should not have errored")

@@ -34,7 +34,8 @@
       "description": "Set this to true to control the encryption keys used to encrypt the data that you store in Data Engine. If set to false, the data is encrypted by using randomly generated keys. For more info on Key Protect integration, see https://cloud.ibm.com/docs/sql-query?topic=sql-query-securing-data.",
       "default": false,
       "source": [
-        "ibm_iam_authorization_policy.kms_policy.count"
+        "ibm_iam_authorization_policy.kms_policy.count",
+        "ibm_resource_instance.data_engine_instance.parameters"
       ],
       "pos": {
         "filename": "variables.tf",
@@ -202,7 +203,7 @@
       },
       "pos": {
         "filename": "main.tf",
-        "line": 13
+        "line": 14
       }
     },
     "ibm_resource_instance.data_engine_instance": {
@@ -212,6 +213,7 @@
       "attributes": {
         "location": "region",
         "name": "instance_name",
+        "parameters": "kms_encryption_enabled",
         "plan": "plan",
         "resource_group_id": "resource_group_id",
         "tags": "tags"
@@ -221,7 +223,7 @@
       },
       "pos": {
         "filename": "main.tf",
-        "line": 22
+        "line": 23
       }
     }
   },

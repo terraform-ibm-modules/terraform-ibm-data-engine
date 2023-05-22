@@ -1,13 +1,14 @@
-
 locals {
-  # user managed encryption is only available with standard plan
-  # existing_kms_instance_guid, kms_key_crn, kms_region would be ignored with lite plan, if provided
-  # not providing either of existing_kms_instance_guid or kms_key_crn or kms_region, will disable user managed encryption
-  enable_user_managed_encryption = var.plan == "standard" && var.existing_kms_instance_guid != null && var.kms_key_crn != null && var.kms_region != null
 
+  # Validation (approach based on https://github.com/hashicorp/terraform/issues/25609#issuecomment-1057614400)
+  # tflint-ignore: terraform_unused_declarations
+  validate_kms_values = !var.kms_encryption_enabled && var.kms_key_crn != null ? tobool("When passing values for var.kms_key_crn, you must set var.kms_encryption_enabled to true. Otherwise unset them to use default encryption") : true
+  # tflint-ignore: terraform_unused_declarations
+  validate_kms_vars = var.kms_encryption_enabled && var.kms_key_crn == null ? tobool("When setting var.kms_encryption_enabled to true, a value must be passed for var.kms_key_crn") : true
   # tflint-ignore: terraform_unused_declarations
   validate_auth_policy = var.kms_encryption_enabled && var.skip_iam_authorization_policy == false && var.existing_kms_instance_guid == null ? tobool("When var.skip_iam_authorization_policy is set to false, and var.kms_encryption_enabled to true, a value must be passed for var.existing_kms_instance_guid in order to create the auth policy.") : true
-
+  # tflint-ignore: terraform_unused_declarations
+  byok_encryption_pan = var.plan == "lite" && var.kms_encryption_enabled ? tobool("User-managed key encryption is only available for the Standard plan.") : true
 }
 
 resource "ibm_iam_authorization_policy" "kms_policy" {
@@ -28,7 +29,7 @@ resource "ibm_resource_instance" "data_engine_instance" {
   tags              = var.tags
 
   parameters = {
-    customerKeyEncrypted : local.enable_user_managed_encryption
+    customerKeyEncrypted : var.kms_encryption_enabled
     kms_instance_id : jsonencode({
       "guid" = var.existing_kms_instance_guid
       "url"  = var.service_endpoints == "public" ? "https://${var.kms_region}.kms.cloud.ibm.com" : "https://private.${var.kms_region}.kms.cloud.ibm.com"
