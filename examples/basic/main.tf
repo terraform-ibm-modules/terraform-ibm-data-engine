@@ -9,11 +9,14 @@ module "resource_group" {
   existing_resource_group_name = var.resource_group
 }
 
-resource "ibm_resource_instance" "cos_instance" {
-  name              = "${var.prefix}-cos"
+##############################################################################
+# Data Engine
+##############################################################################
+
+module "data_engine" {
+  source            = "../../"
   resource_group_id = module.resource_group.resource_group_id
-  service           = "cloud-object-storage"
-  plan              = "standard"
-  location          = "global"
   tags              = var.resource_tags
+  region            = var.region
+  instance_name     = "${var.prefix}-data_engine"
 }
