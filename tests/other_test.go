@@ -8,15 +8,12 @@ import (
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 )
 
-// Use existing resource group
-const basicExampleTerraformDir = "examples/basic"
-
 func TestRunBasicExample(t *testing.T) {
 	t.Parallel()
 
 	options := testhelper.TestOptionsDefaultWithVars(&testhelper.TestOptions{
 		Testing:            t,
-		TerraformDir:       basicExampleTerraformDir,
+		TerraformDir:       "examples/basic",
 		Prefix:             "data-engine-default",
 		ResourceGroup:      resourceGroup,
 		BestRegionYAMLPath: regionSelectionPath,

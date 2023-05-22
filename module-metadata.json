@@ -4,13 +4,13 @@
     "existing_kms_instance_guid": {
       "name": "existing_kms_instance_guid",
       "type": "string",
-      "description": "The GUID of the Key Protect instance in which the key specified in var.kms_key_crn is coming from.",
+      "description": "The GUID the Key Protect instance in which the key specified in var.kms_key_crn is coming from. Required only if var.kms_encryption_enabled is set to true, var.skip_iam_authorization_policy is set to false. NOTE: Hyper Protect Crypto Services is not currently supported by Data Engine.",
       "source": [
         "ibm_iam_authorization_policy.kms_policy.target_resource_instance_id"
       ],
       "pos": {
         "filename": "variables.tf",
-        "line": 69
+        "line": 66
       },
       "immutable": true,
       "computed": true
@@ -18,52 +18,52 @@
     "instance_name": {
       "name": "instance_name",
       "type": "string",
-      "description": "Name to of the new data engine instance",
+      "description": "The name to give the Data Engine instance.",
       "required": true,
       "source": [
         "ibm_resource_instance.data_engine_instance.name"
       ],
       "pos": {
         "filename": "variables.tf",
-        "line": 12
+        "line": 10
       }
     },
     "kms_encryption_enabled": {
       "name": "kms_encryption_enabled",
       "type": "bool",
-      "description": "Set this to true to control the encryption keys used to encrypt the data that you store in IBM Cloud® Databases. If set to false, the data is encrypted by using randomly generated keys. For more info on Key Protect integration, see https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-key-protect. For more info on HPCS integration, see https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-hpcs",
+      "description": "Set this to true to control the encryption keys used to encrypt the data that you store in Data Engine. If set to false, the data is encrypted by using randomly generated keys. For more info on Key Protect integration, see https://cloud.ibm.com/docs/sql-query?topic=sql-query-securing-data.",
       "default": false,
       "source": [
         "ibm_iam_authorization_policy.kms_policy.count"
       ],
       "pos": {
         "filename": "variables.tf",
-        "line": 51
+        "line": 48
       }
     },
     "kms_key_crn": {
       "name": "kms_key_crn",
       "type": "string",
-      "description": "The root key CRN of a Key Management Service like Key Protect that you want to use for disk encryption. If null, database is encrypted by using randomly generated keys. See https://cloud.ibm.com/docs/sql-query?topic=sql-query-keyprotect",
+      "description": "The root key CRN of a Key Protect key that you want to use for disk encryption. Only used if var.kms_encryption_enabled is set to true. NOTE: Hyper Protect Crypto Services is not currently supported by Data Engine.",
       "pos": {
         "filename": "variables.tf",
-        "line": 75
+        "line": 72
       }
     },
     "kms_region": {
       "name": "kms_region",
       "type": "string",
-      "description": "(Optional) The region where key protect is deployed",
+      "description": "The region where KMS instance exists if using KMS encryption.",
       "default": "us-south",
       "pos": {
         "filename": "variables.tf",
-        "line": 63
+        "line": 60
       }
     },
     "plan": {
       "name": "plan",
       "type": "string",
-      "description": "The plan for the Data engine instance. Standard or lite.",
+      "description": "The plan for the Data Engine instance. Supported plans: standard or lite.",
       "default": "lite",
       "required": true,
       "source": [
@@ -71,13 +71,13 @@
       ],
       "pos": {
         "filename": "variables.tf",
-        "line": 30
+        "line": 27
       }
     },
     "region": {
       "name": "region",
       "type": "string",
-      "description": "Name of the Region to deploy in data engine instance",
+      "description": "The region where you want to deploy your instance.",
       "default": "us-south",
       "required": true,
       "source": [
@@ -85,7 +85,7 @@
       ],
       "pos": {
         "filename": "variables.tf",
-        "line": 24
+        "line": 21
       },
       "cloud_data_type": "region",
       "immutable": true
@@ -93,7 +93,7 @@
     "resource_group_id": {
       "name": "resource_group_id",
       "type": "string",
-      "description": "ID of resource group to use when creating the data engine",
+      "description": "The resource group ID where the Data Engine instance will be created.",
       "required": true,
       "source": [
         "ibm_iam_authorization_policy.kms_policy.source_resource_group_id",
@@ -101,7 +101,7 @@
       ],
       "pos": {
         "filename": "variables.tf",
-        "line": 6
+        "line": 5
       },
       "cloud_data_type": "resource_group",
       "immutable": true,
@@ -113,21 +113,21 @@
     "service_endpoints": {
       "name": "service_endpoints",
       "type": "string",
-      "description": "The type of the service endpoint for the data engine.",
+      "description": "Specify whether you want to enable the public, private, or both service endpoints. Supported values are 'public', 'private', or 'public-and-private'.",
       "default": "private",
       "pos": {
         "filename": "variables.tf",
-        "line": 41
+        "line": 38
       }
     },
     "skip_iam_authorization_policy": {
       "name": "skip_iam_authorization_policy",
       "type": "bool",
-      "description": "Set to true to skip the creation of an IAM authorization policy that permits all Data Engine instances in the given resource group to read the encryption key from the KMS instance provided in 'existing_kms_instance_guid'",
-      "default": true,
+      "description": "Set to true to skip the creation of an IAM authorization policy that permits all Data Engine instances in the resource group to read the encryption key from the KMS instance. If set to false, pass in a value for the KMS instance in the existing_kms_instance_guid variable. In addition, no policy is created if var.kms_encryption_enabled is set to false.",
+      "default": false,
       "pos": {
         "filename": "variables.tf",
-        "line": 57
+        "line": 54
       }
     },
     "tags": {
@@ -140,7 +140,7 @@
       ],
       "pos": {
         "filename": "variables.tf",
-        "line": 17
+        "line": 15
       }
     }
   },

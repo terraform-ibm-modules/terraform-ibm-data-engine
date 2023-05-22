@@ -1,8 +1,7 @@
-# Complete Example With BYOK Encryption
+# Complete example with BYOK encryption
 
-An end-to-end example to create data engine with standard plan.
-This example uses the IBM Cloud terraform provider to:
- - Create a new resource group if one is not passed in.
- - Create a new data engine instance and encrypt it with new key protect key created by the example in the resource group and region provided.
+An end-to-end example that uses the IBM Cloud Terraform provider to create the following infrastructure:
 
-<!-- Add your example and link to it from the module's main readme file. -->
+- A resource group, if one is not passed in.
+- A Key Protect instance with a root key.
+- An instance of IBM Cloud® Data Engine with BYOK encryption.

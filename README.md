@@ -1,76 +1,29 @@
 # Data Engine (SQL Query) Module
 
-<!-- UPDATE BADGES:
-1. Make sure that the badge link for the current status of the module is correct. For the status options, see https://github.ibm.com/GoldenEye/documentation/blob/master/status.md.
-2. Update the "Build Status" badge to point to the travis pipeline for the module. Replace "module-template" in two places.
-3. Update the "latest release" badge to point to the new module. Replace "module-template" in two places.
--->
-
-[![Stable (With quality checks)](https://img.shields.io/badge/Status-Stable%20(With%20quality%20checks)-green)](https://terraform-ibm-modules.github.io/documentation/#/badge-status)
+[![Stable (With quality checks)](https://img.shields.io/badge/Status-Stable%20(With%20quality%20checks)-green?style=plastic)](https://terraform-ibm-modules.github.io/documentation/#/badge-status)
 [![Build status](https://github.com/terraform-ibm-modules/terraform-ibm-data-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/terraform-ibm-modules/terraform-ibm-data-engine/actions/workflows/ci.yml)
-[![CI](https://img.shields.io/badge/CI-Toolchain%20Tekton%20Pipeline-3662FF?logo=ibm)](https://cloud.ibm.com/devops/toolchains/c3916535-165a-4275-9b1f-c58575839951?env_id=ibm:yp:us-south)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![latest release](https://img.shields.io/github/v/release/terraform-ibm-modules/terraform-ibm-data-engine?logo=GitHub&sort=semver)](https://github.com/terraform-ibm-modules/terraform-ibm-data-engine/releases/latest)
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
-This module provisions data engine instance.
+This module provisions an [IBM Cloud® Data Engine](https://cloud.ibm.com/docs/sql-query?topic=sql-query-getting-started) instance.
 
 ## Usage
 
-<!--
-Add an example of the use of the module in the following code block.
-
-Use real values instead of "var.<var_name>" or other placeholder values
-unless real values don't help users know what to change.
--->
-
 ```hcl
-# Replace "main" with a GIT release version to lock into a specific release
+provider "ibm" {
+  ibmcloud_api_key = "XXXXXXXXXX"
+  region           = "us-south"
+}
+
 module "data_engine" {
+  # Replace "main" with a GIT release version to lock into a specific release
   source               = "git::https://github.com/terraform-ibm-modules/terraform-ibm-data-engine.git?ref=main"
   resource_group_id    = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX"
-  key_protect_region   = "us-south"
   region               = "us-south"
-  plan                 = "lite"
 }
 ```
-
-<!--
-Include the following 'Controls' section if the module implements NIST controls
-Remove the 'section if the module does not implement controls
--->
-
-<!-- GoldenEye core team only
-## Compliance and security
-
-This module implements the following NIST controls. For more information about how this module implements the controls in the following list, see [NIST controls](docs/controls.md).
-
-| Profile | Category | ID       | Description |
-|---------|----------|----------|-------------|
-| NIST    | SC-7     | SC-7(3)  | Limit the number of external network connections to the information system. |
-
-The 'Profile' and 'ID' columns are used by the IBM Cloud catalog to import
-the controls into the catalog page.
-
-In the example here, remove the SC-7 row and include a row for each control
-that the module implements.
-
-Include the control enhancement in the ID column ('SC-7(3)' in this example).
-
-Identify how the module is complying with the controls. Summarize the
-rationale or implementation in the 'Description' column.
-
-For details about the controls, see the NIST Risk Management Framework page at
-https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#/controls?version=4.0.
--->
-
-<!-- PERMISSIONS REQUIRED TO RUN MODULE
-If this module requires permissions, uncomment the following block and update
-the sample permissions, following the format.
-Replace the sample Account and IBM Cloud service names and roles with the
-information in the console at
-Manage > Access (IAM) > Access groups > Access policies.
--->
 
 ## Required IAM access policies
 
@@ -86,18 +39,11 @@ You need the following permissions to run this module.
     - `Editor` platform access
     - `Manager` service access
 
-<!-- NO PERMISSIONS FOR MODULE
-If no permissions are required for the module, uncomment the following
-statement instead the previous block.
--->
-
-<!-- No permissions are needed to run this module.-->
-<!-- END MODULE HOOK -->
 <!-- BEGIN EXAMPLES HOOK -->
 ## Examples
 
 - [ Basic Example](examples/basic)
-- [ Complete Example With BYOK Encryption](examples/complete)
+- [ Complete example with BYOK encryption](examples/complete)
 <!-- END EXAMPLES HOOK -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -122,16 +68,16 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_existing_kms_instance_guid"></a> [existing\_kms\_instance\_guid](#input\_existing\_kms\_instance\_guid) | The GUID of the Key Protect instance in which the key specified in var.kms\_key\_crn is coming from. | `string` | `null` | no |
-| <a name="input_instance_name"></a> [instance\_name](#input\_instance\_name) | Name to of the new data engine instance | `string` | n/a | yes |
-| <a name="input_kms_encryption_enabled"></a> [kms\_encryption\_enabled](#input\_kms\_encryption\_enabled) | Set this to true to control the encryption keys used to encrypt the data that you store in IBM Cloud® Databases. If set to false, the data is encrypted by using randomly generated keys. For more info on Key Protect integration, see https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-key-protect. For more info on HPCS integration, see https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-hpcs | `bool` | `false` | no |
-| <a name="input_kms_key_crn"></a> [kms\_key\_crn](#input\_kms\_key\_crn) | The root key CRN of a Key Management Service like Key Protect that you want to use for disk encryption. If null, database is encrypted by using randomly generated keys. See https://cloud.ibm.com/docs/sql-query?topic=sql-query-keyprotect | `string` | `null` | no |
-| <a name="input_kms_region"></a> [kms\_region](#input\_kms\_region) | (Optional) The region where key protect is deployed | `string` | `"us-south"` | no |
-| <a name="input_plan"></a> [plan](#input\_plan) | The plan for the Data engine instance. Standard or lite. | `string` | `"lite"` | no |
-| <a name="input_region"></a> [region](#input\_region) | Name of the Region to deploy in data engine instance | `string` | `"us-south"` | no |
-| <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | ID of resource group to use when creating the data engine | `string` | n/a | yes |
-| <a name="input_service_endpoints"></a> [service\_endpoints](#input\_service\_endpoints) | The type of the service endpoint for the data engine. | `string` | `"private"` | no |
-| <a name="input_skip_iam_authorization_policy"></a> [skip\_iam\_authorization\_policy](#input\_skip\_iam\_authorization\_policy) | Set to true to skip the creation of an IAM authorization policy that permits all Data Engine instances in the given resource group to read the encryption key from the KMS instance provided in 'existing\_kms\_instance\_guid' | `bool` | `true` | no |
+| <a name="input_existing_kms_instance_guid"></a> [existing\_kms\_instance\_guid](#input\_existing\_kms\_instance\_guid) | The GUID the Key Protect instance in which the key specified in var.kms\_key\_crn is coming from. Required only if var.kms\_encryption\_enabled is set to true, var.skip\_iam\_authorization\_policy is set to false. NOTE: Hyper Protect Crypto Services is not currently supported by Data Engine. | `string` | `null` | no |
+| <a name="input_instance_name"></a> [instance\_name](#input\_instance\_name) | The name to give the Data Engine instance. | `string` | n/a | yes |
+| <a name="input_kms_encryption_enabled"></a> [kms\_encryption\_enabled](#input\_kms\_encryption\_enabled) | Set this to true to control the encryption keys used to encrypt the data that you store in Data Engine. If set to false, the data is encrypted by using randomly generated keys. For more info on Key Protect integration, see https://cloud.ibm.com/docs/sql-query?topic=sql-query-securing-data. | `bool` | `false` | no |
+| <a name="input_kms_key_crn"></a> [kms\_key\_crn](#input\_kms\_key\_crn) | The root key CRN of a Key Protect key that you want to use for disk encryption. Only used if var.kms\_encryption\_enabled is set to true. NOTE: Hyper Protect Crypto Services is not currently supported by Data Engine. | `string` | `null` | no |
+| <a name="input_kms_region"></a> [kms\_region](#input\_kms\_region) | The region where KMS instance exists if using KMS encryption. | `string` | `"us-south"` | no |
+| <a name="input_plan"></a> [plan](#input\_plan) | The plan for the Data Engine instance. Supported plans: standard or lite. | `string` | `"lite"` | no |
+| <a name="input_region"></a> [region](#input\_region) | The region where you want to deploy your instance. | `string` | `"us-south"` | no |
+| <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | The resource group ID where the Data Engine instance will be created. | `string` | n/a | yes |
+| <a name="input_service_endpoints"></a> [service\_endpoints](#input\_service\_endpoints) | Specify whether you want to enable the public, private, or both service endpoints. Supported values are 'public', 'private', or 'public-and-private'. | `string` | `"private"` | no |
+| <a name="input_skip_iam_authorization_policy"></a> [skip\_iam\_authorization\_policy](#input\_skip\_iam\_authorization\_policy) | Set to true to skip the creation of an IAM authorization policy that permits all Data Engine instances in the resource group to read the encryption key from the KMS instance. If set to false, pass in a value for the KMS instance in the existing\_kms\_instance\_guid variable. In addition, no policy is created if var.kms\_encryption\_enabled is set to false. | `bool` | `false` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | (Optional, Array of Strings) A list of tags that you want to add to your instance. | `list(any)` | `[]` | no |
 
 ## Outputs

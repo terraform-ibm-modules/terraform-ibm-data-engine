@@ -2,15 +2,13 @@
 # Input Variables
 ##############################################################################
 
-
 variable "resource_group_id" {
-  description = "ID of resource group to use when creating the data engine"
+  description = "The resource group ID where the Data Engine instance will be created."
   type        = string
 }
 
-
 variable "instance_name" {
-  description = "Name to of the new data engine instance"
+  description = "The name to give the Data Engine instance."
   type        = string
 }
 
@@ -20,16 +18,15 @@ variable "tags" {
   default     = []
 }
 
-
 variable "region" {
   type        = string
-  description = "Name of the Region to deploy in data engine instance"
+  description = "The region where you want to deploy your instance."
   default     = "us-south"
 }
 
 variable "plan" {
   type        = string
-  description = "The plan for the Data engine instance. Standard or lite."
+  description = "The plan for the Data Engine instance. Supported plans: standard or lite."
   default     = "lite"
 
   validation {
@@ -39,41 +36,48 @@ variable "plan" {
 }
 
 variable "service_endpoints" {
-  description = "The type of the service endpoint for the data engine."
+  description = "Specify whether you want to enable the public, private, or both service endpoints. Supported values are 'public', 'private', or 'public-and-private'."
   type        = string
   default     = "private"
   validation {
     condition     = contains(["public", "private", "public-and-private"], var.service_endpoints)
-    error_message = "The endpoint value must be one of the following: public , private and public-and-private"
+    error_message = "Valid values for service_endpoints are 'public', 'public-and-private', and 'private'"
   }
 }
 
 variable "kms_encryption_enabled" {
   type        = bool
-  description = "Set this to true to control the encryption keys used to encrypt the data that you store in IBM Cloud® Databases. If set to false, the data is encrypted by using randomly generated keys. For more info on Key Protect integration, see https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-key-protect. For more info on HPCS integration, see https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-hpcs"
+  description = "Set this to true to control the encryption keys used to encrypt the data that you store in Data Engine. If set to false, the data is encrypted by using randomly generated keys. For more info on Key Protect integration, see https://cloud.ibm.com/docs/sql-query?topic=sql-query-securing-data."
   default     = false
 }
 
 variable "skip_iam_authorization_policy" {
   type        = bool
-  description = "Set to true to skip the creation of an IAM authorization policy that permits all Data Engine instances in the given resource group to read the encryption key from the KMS instance provided in 'existing_kms_instance_guid'"
-  default     = true
+  description = "Set to true to skip the creation of an IAM authorization policy that permits all Data Engine instances in the resource group to read the encryption key from the KMS instance. If set to false, pass in a value for the KMS instance in the existing_kms_instance_guid variable. In addition, no policy is created if var.kms_encryption_enabled is set to false."
+  default     = false
 }
 
 variable "kms_region" {
-  description = "(Optional) The region where key protect is deployed"
+  description = "The region where KMS instance exists if using KMS encryption."
   type        = string
   default     = "us-south"
 }
 
 variable "existing_kms_instance_guid" {
   type        = string
-  description = "The GUID of the Key Protect instance in which the key specified in var.kms_key_crn is coming from."
+  description = "The GUID the Key Protect instance in which the key specified in var.kms_key_crn is coming from. Required only if var.kms_encryption_enabled is set to true, var.skip_iam_authorization_policy is set to false. NOTE: Hyper Protect Crypto Services is not currently supported by Data Engine."
   default     = null
 }
 
 variable "kms_key_crn" {
   type        = string
-  description = "The root key CRN of a Key Management Service like Key Protect that you want to use for disk encryption. If null, database is encrypted by using randomly generated keys. See https://cloud.ibm.com/docs/sql-query?topic=sql-query-keyprotect"
+  description = "The root key CRN of a Key Protect key that you want to use for disk encryption. Only used if var.kms_encryption_enabled is set to true. NOTE: Hyper Protect Crypto Services is not currently supported by Data Engine."
   default     = null
+  validation {
+    condition = anytrue([
+      var.kms_key_crn == null,
+      can(regex(".*kms.*", var.kms_key_crn)),
+    ])
+    error_message = "Value must be the root key CRN from Key Protect"
+  }
 }

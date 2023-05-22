@@ -10,15 +10,15 @@ import (
 
 // Use existing resource group
 const resourceGroup = "geretain-test-data-engine"
-const completeExampleTerraformDir = "examples/complete"
 
+// Restricting due to limited availability of BYOK in certain regions
 const regionSelectionPath = "../common-dev-assets/common-go-assets/icd-region-prefs.yaml"
 
 func TestRunCompleteExample(t *testing.T) {
 	t.Parallel()
 	options := testhelper.TestOptionsDefaultWithVars(&testhelper.TestOptions{
 		Testing:            t,
-		TerraformDir:       completeExampleTerraformDir,
+		TerraformDir:       "examples/complete",
 		Prefix:             "data-engine-complete",
 		ResourceGroup:      resourceGroup,
 		BestRegionYAMLPath: regionSelectionPath,

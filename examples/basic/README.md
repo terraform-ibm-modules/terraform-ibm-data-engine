@@ -1,8 +1,6 @@
 # Basic Example
 
-An end-to-end example to create data engine with lite plan.
-This example uses the IBM Cloud terraform provider to:
- - Create a new resource group if one is not passed in.
- - Create a new data engine with lite plan in the resource group and region provided.
+An end-to-end example that creates the following infrastructure:
 
-<!-- Add your example and link to it from the module's main readme file. -->
+- A resource group, if one is not passed in.
+- An IBM Cloud® Data Engine instance.
