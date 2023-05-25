@@ -67,4 +67,22 @@ module "data_engine" {
   kms_encryption_enabled     = true
   existing_kms_instance_guid = module.key_protect_all_inclusive.key_protect_guid
   kms_key_crn                = module.key_protect_all_inclusive.keys["sql.${var.prefix}-data-engine"].crn
+  cbr_rules = [
+    {
+      description      = "${var.prefix}-mongodb access only from vpc"
+      enforcement_mode = "enabled"
+      account_id       = data.ibm_iam_account_settings.iam_account_settings.account_id
+      rule_contexts = [{
+        attributes = [
+          {
+            "name" : "endpointType",
+            "value" : "private"
+          },
+          {
+            name  = "networkZoneId"
+            value = module.cbr_zone.zone_id
+        }]
+      }]
+    }
+  ]
 }

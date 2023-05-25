@@ -43,7 +43,7 @@ You need the following permissions to run this module.
 ## Examples
 
 - [ Basic Example](examples/basic)
-- [ Complete example with BYOK encryption](examples/complete)
+- [ Complete example with BYOK encryption and CBR rules](examples/complete)
 <!-- END EXAMPLES HOOK -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
