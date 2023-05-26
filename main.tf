@@ -62,7 +62,7 @@ module "cbr_rule" {
       },
       {
         name     = "serviceName"
-        value    = "data-engine-instance"
+        value    = "sql-query"
         operator = "stringEquals"
       }
     ]
