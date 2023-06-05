@@ -81,3 +81,12 @@ variable "kms_key_crn" {
     error_message = "Value must be the root key CRN from Key Protect"
   }
 }
+
+# variable "allowlist" {
+#   type = list(object({
+#     address     = optional(string)
+#     description = optional(string)
+#   }))
+#   default     = []
+#   description = "Set of IP address and description to allowlist in database"
+# }

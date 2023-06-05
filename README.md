@@ -44,6 +44,7 @@ You need the following permissions to run this module.
 
 - [ Basic Example](examples/basic)
 - [ Complete example with BYOK encryption](examples/complete)
+- [ Financial Services Cloud profile example](examples/fscloud)
 <!-- END EXAMPLES HOOK -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements

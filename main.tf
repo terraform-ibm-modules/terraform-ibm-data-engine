@@ -36,4 +36,12 @@ resource "ibm_resource_instance" "data_engine_instance" {
     }),
     kms_rootkey_id : var.kms_key_crn
   }
+
+  # dynamic "allowlist" {
+  #   for_each = (var.allowlist != null ? var.allowlist : [])
+  #   content {
+  #     address     = (allowlist.value.address != "" ? allowlist.value.address : null)
+  #     description = (allowlist.value.description != "" ? allowlist.value.description : null)
+  #   }
+  # }
 }
