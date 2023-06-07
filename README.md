@@ -18,8 +18,8 @@ provider "ibm" {
 }
 
 module "data_engine" {
-  # Replace "main" with a GIT release version to lock into a specific release
-  source               = "git::https://github.com/terraform-ibm-modules/terraform-ibm-data-engine.git?ref=main"
+  source  = "terraform-ibm-modules/data-engine/ibm"
+  version = "latest" # Replace "latest" with a release version to lock into a specific release
   resource_group_id    = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX"
   region               = "us-south"
 }
