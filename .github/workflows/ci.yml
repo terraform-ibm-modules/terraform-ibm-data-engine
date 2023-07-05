@@ -12,5 +12,6 @@ jobs:
     secrets: inherit
     with:
       craSCCv2: true
-      craTarget: "examples/complete"
+      craTarget: "examples/fscloud"
       craRuleIgnoreFile: "cra-tf-validate-ignore-rules.json"
+      craEnvironmentVariables: "TF_VAR_existing_kms_instance_guid=${{ vars.KP_SOUTH_GUID }},TF_VAR_kms_key_crn=${{ vars.KP_SOUTH_KEY_CRN }}"

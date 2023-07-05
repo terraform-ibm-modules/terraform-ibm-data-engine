@@ -16,6 +16,7 @@ const regionSelectionPath = "../common-dev-assets/common-go-assets/icd-region-pr
 
 // Example dir
 const completeExampleTerraformDir = "examples/complete"
+const fsCloudTerraformDir = "examples/fscloud"
 
 func TestRunCompleteExample(t *testing.T) {
 	t.Parallel()
@@ -48,4 +49,23 @@ func TestRunUpgradeExample(t *testing.T) {
 		assert.Nil(t, err, "This should not have errored")
 		assert.NotNil(t, output, "Expected some output")
 	}
+}
+
+func TestRunFSCloudExample(t *testing.T) {
+	t.Parallel()
+	options := testhelper.TestOptionsDefaultWithVars(&testhelper.TestOptions{
+		Testing:            t,
+		TerraformDir:       fsCloudTerraformDir,
+		Prefix:             "data-engine-fs",
+		ResourceGroup:      resourceGroup,
+		BestRegionYAMLPath: regionSelectionPath,
+		TerraformVars: map[string]interface{}{
+			"existing_kms_instance_guid": permanentResources["kp"],
+			"kms_key_crn":                permanentResources["kp_crn"],
+		},
+	})
+
+	output, err := options.RunTestConsistency()
+	assert.Nil(t, err, "This should not have errored")
+	assert.NotNil(t, output, "Expected some output")
 }
