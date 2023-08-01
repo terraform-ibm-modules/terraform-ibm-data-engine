@@ -36,12 +36,12 @@ variable "plan" {
 }
 
 variable "service_endpoints" {
-  description = "Specify whether you want to enable the public, private, or both service endpoints. Supported values are 'public', 'private', or 'public-and-private'."
+  description = "It enables the public service endpoints. Supported values is 'public'."
   type        = string
-  default     = "private"
+  default     = "public"
   validation {
-    condition     = contains(["public", "private", "public-and-private"], var.service_endpoints)
-    error_message = "Valid values for service_endpoints are 'public', 'public-and-private', and 'private'"
+    condition     = contains(["public"], var.service_endpoints)
+    error_message = "Valid values for service_endpoints is 'public',"
   }
 }
 
