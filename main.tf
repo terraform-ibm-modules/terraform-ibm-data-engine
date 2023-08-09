@@ -20,6 +20,13 @@ resource "ibm_iam_authorization_policy" "kms_policy" {
   roles                       = ["Reader"]
 }
 
+# workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4478
+resource "time_sleep" "wait_for_authorization_policy" {
+  depends_on = [ibm_iam_authorization_policy.kms_policy]
+
+  create_duration = "30s"
+}
+
 resource "ibm_resource_instance" "data_engine_instance" {
   name              = var.instance_name
   service           = "sql-query"
