@@ -42,6 +42,16 @@
         "line": 48
       }
     },
+    "kms_endpoint": {
+      "name": "kms_endpoint",
+      "type": "string",
+      "description": "The KMS endpoint to use when configuring KMS encryption. Must be private or public.",
+      "default": "public",
+      "pos": {
+        "filename": "variables.tf",
+        "line": 38
+      }
+    },
     "kms_key_crn": {
       "name": "kms_key_crn",
       "type": "string",
@@ -49,6 +59,15 @@
       "pos": {
         "filename": "variables.tf",
         "line": 72
+      }
+    },
+    "kms_key_id": {
+      "name": "kms_key_id",
+      "type": "string",
+      "description": "The id of the root key in the KMS instance that will be used to encrypt the cluster.",
+      "pos": {
+        "filename": "variables.tf",
+        "line": 85
       }
     },
     "kms_region": {
@@ -110,16 +129,6 @@
       "cloud_data_range": [
         "resolved_to:id"
       ]
-    },
-    "service_endpoints": {
-      "name": "service_endpoints",
-      "type": "string",
-      "description": "It enables the public service endpoints. Supported values is 'public'.",
-      "default": "public",
-      "pos": {
-        "filename": "variables.tf",
-        "line": 38
-      }
     },
     "skip_iam_authorization_policy": {
       "name": "skip_iam_authorization_policy",

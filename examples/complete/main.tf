@@ -38,5 +38,5 @@ module "data_engine" {
   plan                       = "standard"
   kms_encryption_enabled     = true
   existing_kms_instance_guid = module.key_protect_all_inclusive.key_protect_guid
-  kms_key_crn                = module.key_protect_all_inclusive.keys["sql.${var.prefix}-data-engine"].crn
+  kms_key_id                 = module.key_protect_all_inclusive.keys["sql.${var.prefix}-data-engine"].key_id
 }
