@@ -46,7 +46,7 @@
       "name": "kms_endpoint",
       "type": "string",
       "description": "The KMS endpoint to use when configuring KMS encryption. Must be private or public.",
-      "default": "public",
+      "default": "private",
       "pos": {
         "filename": "variables.tf",
         "line": 38
