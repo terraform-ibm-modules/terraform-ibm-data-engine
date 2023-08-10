@@ -38,7 +38,7 @@ variable "plan" {
 variable "kms_endpoint" {
   description = "The KMS endpoint to use when configuring KMS encryption. Must be private or public."
   type        = string
-  default     = "public"
+  default     = "private"
   validation {
     condition     = contains(["public", "private"], var.kms_endpoint)
     error_message = "Valid values for service_endpoints is 'public','private'."
