@@ -41,7 +41,7 @@ variable "kms_endpoint" {
   default     = "private"
   validation {
     condition     = contains(["public", "private"], var.kms_endpoint)
-    error_message = "Valid values for service_endpoints is 'public','private'."
+    error_message = "Valid values for service_endpoints are 'public' or 'private'."
   }
 }
 
@@ -69,21 +69,15 @@ variable "existing_kms_instance_guid" {
   default     = null
 }
 
-variable "kms_key_crn" {
+variable "kms_key_id" {
   type        = string
-  description = "The root key CRN of a Key Protect key that you want to use for disk encryption. Only used if var.kms_encryption_enabled is set to true. NOTE: Hyper Protect Crypto Services is not currently supported by Data Engine."
+  description = "The root key ID of a Key Protect key that you want to use to encrypt your stored Data Engine jobs. Only used if var.kms_encryption_enabled is set to true. NOTE: Hyper Protect Crypto Services is not currently supported by Data Engine."
   default     = null
   validation {
     condition = anytrue([
-      var.kms_key_crn == null,
-      can(regex(".*kms.*", var.kms_key_crn)),
+      var.kms_key_id == null,
+      can(regex(".*kms.*", var.kms_key_id)),
     ])
-    error_message = "Value must be the root key CRN from Key Protect"
+    error_message = "Value must be the root key id from Key Protect"
   }
-}
-
-variable "kms_key_id" {
-  type        = string
-  description = "The id of the root key in the KMS instance that will be used to encrypt the cluster."
-  default     = null
 }
