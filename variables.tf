@@ -73,11 +73,4 @@ variable "kms_key_id" {
   type        = string
   description = "The root key ID of a Key Protect key that you want to use to encrypt your stored Data Engine jobs. Only used if var.kms_encryption_enabled is set to true. NOTE: Hyper Protect Crypto Services is not currently supported by Data Engine."
   default     = null
-  validation {
-    condition = anytrue([
-      var.kms_key_id == null,
-      can(regex(".*kms.*", var.kms_key_id)),
-    ])
-    error_message = "Value must be the root key id from Key Protect"
-  }
 }
