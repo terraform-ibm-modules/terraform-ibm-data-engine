@@ -41,7 +41,7 @@ variable "kms_endpoint" {
   default     = "private"
   validation {
     condition     = contains(["public", "private"], var.kms_endpoint)
-    error_message = "Valid values for service_endpoints are 'public' or 'private'."
+    error_message = "Valid values for kms_endpoint are 'public' or 'private'."
   }
 }
 
