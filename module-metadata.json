@@ -42,10 +42,20 @@
         "line": 48
       }
     },
-    "kms_key_crn": {
-      "name": "kms_key_crn",
+    "kms_endpoint": {
+      "name": "kms_endpoint",
       "type": "string",
-      "description": "The root key CRN of a Key Protect key that you want to use for disk encryption. Only used if var.kms_encryption_enabled is set to true. NOTE: Hyper Protect Crypto Services is not currently supported by Data Engine.",
+      "description": "The KMS endpoint to use when configuring KMS encryption. Must be private or public.",
+      "default": "private",
+      "pos": {
+        "filename": "variables.tf",
+        "line": 38
+      }
+    },
+    "kms_key_id": {
+      "name": "kms_key_id",
+      "type": "string",
+      "description": "The root key ID of a Key Protect key that you want to use to encrypt your stored Data Engine jobs. Only used if var.kms_encryption_enabled is set to true. NOTE: Hyper Protect Crypto Services is not currently supported by Data Engine.",
       "pos": {
         "filename": "variables.tf",
         "line": 72
@@ -110,16 +120,6 @@
       "cloud_data_range": [
         "resolved_to:id"
       ]
-    },
-    "service_endpoints": {
-      "name": "service_endpoints",
-      "type": "string",
-      "description": "Specify whether you want to enable the public, private, or both service endpoints. Supported values are 'public', 'private', or 'public-and-private'.",
-      "default": "private",
-      "pos": {
-        "filename": "variables.tf",
-        "line": 38
-      }
     },
     "skip_iam_authorization_policy": {
       "name": "skip_iam_authorization_policy",
