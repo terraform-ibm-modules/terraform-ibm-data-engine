@@ -13,4 +13,4 @@ jobs:
     with:
       craSCCv2: true
       craTarget: "examples/complete"
-      craRuleIgnoreFile: "cra-tf-validate-ignore-rules.json"
+      craConfigYamlFile: "cra-config.yaml"
