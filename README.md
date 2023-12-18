@@ -9,7 +9,18 @@
 
 This module provisions an [IBM Cloud® Data Engine](https://cloud.ibm.com/docs/sql-query?topic=sql-query-getting-started) instance.
 
-## Usage
+<!-- Below content is automatically populated via pre-commit hook -->
+<!-- BEGIN OVERVIEW HOOK -->
+## Overview
+* [terraform-ibm-data-engine](#terraform-ibm-data-engine)
+* [Examples](./examples)
+    * [Basic Example](./examples/basic)
+    * [Complete example with BYOK encryption](./examples/complete)
+* [Contributing](#contributing)
+<!-- END OVERVIEW HOOK -->
+
+## terraform-ibm-data-engine
+### Usage
 
 ```hcl
 provider "ibm" {
@@ -39,12 +50,6 @@ You need the following permissions to run this module.
     - `Editor` platform access
     - `Manager` service access
 
-<!-- BEGIN EXAMPLES HOOK -->
-## Examples
-
-- [ Basic Example](examples/basic)
-- [ Complete example with BYOK encryption](examples/complete)
-<!-- END EXAMPLES HOOK -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 
