@@ -7,6 +7,12 @@
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
+---
+
+:warning: **Deprecated**: IBM Cloud® Data Engine is deprecated. As of 18 February 2024 you can't create new instances, and access to free instances will be removed. Existing Standard plan instances are supported until 18 January 2025. Any instances that still exist on that date will be deleted.
+
+---
+
 This module provisions an [IBM Cloud® Data Engine](https://cloud.ibm.com/docs/sql-query?topic=sql-query-getting-started) instance.
 
 <!-- Below content is automatically populated via pre-commit hook -->
